@@ -10,7 +10,7 @@ import useCartStore from '../store/cartStore';
 import useAuthStore from '../store/authStore';
 import toast from 'react-hot-toast';
 
-const FALLBACK = 'https://images.unsplash.com/photo-1463936575829-25148e1db1b8?w=700&q=80';
+const FALLBACK = 'https://picsum.photos/seed/productdetail/700/700';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -91,7 +91,7 @@ const ProductDetailPage = () => {
         <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
           <Link
             to="/shop"
-            className="inline-flex items-center gap-2 text-white/40 hover:text-white mb-8 transition-colors text-sm group"
+            className="inline-flex items-center gap-2 text-white/40 hover:text-white mb-10 transition-colors text-sm group"
           >
             <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" />
             Back to Shop
@@ -99,7 +99,7 @@ const ProductDetailPage = () => {
         </motion.div>
 
         {/* Product details grid */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 mb-16">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 mb-20">
 
           {/* ── Image ── */}
           <motion.div
@@ -145,22 +145,21 @@ const ProductDetailPage = () => {
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col"
           >
-            {/* Category tag */}
             {product.categories?.name && (
-              <span className="text-xs font-bold text-red-400 uppercase tracking-widest mb-3">
+              <span className="inline-block text-xs font-bold text-red-400 uppercase tracking-widest mb-4 px-3 py-1 rounded-full" style={{ background: 'rgba(233,69,96,0.1)', border: '1px solid rgba(233,69,96,0.2)' }}>
                 {product.categories.name}
               </span>
             )}
 
             <h1
-              className="text-2xl sm:text-3xl lg:text-4xl font-black mb-4 leading-tight"
+              className="text-2xl sm:text-3xl lg:text-4xl font-black mb-5 leading-tight"
               style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.02em' }}
             >
               {product.name}
             </h1>
 
             {/* Rating */}
-            <div className="flex items-center gap-3 mb-5">
+            <div className="flex items-center gap-3 mb-6">
               <div className="flex gap-0.5">
                 {[1, 2, 3, 4, 5].map((s) => (
                   <Star key={s} size={17}
@@ -174,8 +173,8 @@ const ProductDetailPage = () => {
             </div>
 
             {/* Description */}
-            <p className="text-white/55 leading-relaxed mb-6 text-sm sm:text-base">
-              {product.description || 'Premium quality product from Green Tiger.'}
+            <p className="text-white/55 leading-relaxed mb-8 text-sm sm:text-base">
+              {product.description || 'Premium quality product from Green tigers.'}
             </p>
 
             {/* Price */}
@@ -187,7 +186,7 @@ const ProductDetailPage = () => {
             </div>
 
             {/* Stock status */}
-            <div className="flex items-center gap-2 mb-7">
+            <div className="flex items-center gap-2.5 mb-8">
               <span
                 className={`w-2 h-2 rounded-full ${inStock ? 'bg-emerald-400' : 'bg-red-400'}`}
                 style={{ boxShadow: inStock ? '0 0 6px rgba(52,211,153,0.6)' : '0 0 6px rgba(248,113,113,0.6)' }}
@@ -198,7 +197,7 @@ const ProductDetailPage = () => {
             </div>
 
             {/* Quantity + Add to cart */}
-            <div className="flex items-stretch gap-3 mb-6">
+            <div className="flex items-stretch gap-3.5 mb-8">
               {/* Qty picker */}
               <div
                 className="flex items-center rounded-xl overflow-hidden"
@@ -241,14 +240,14 @@ const ProductDetailPage = () => {
             </div>
 
             {/* Feature badges */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-3.5">
               {[
                 { icon: Truck,    label: 'Fast Delivery',    color: '#48dbfb' },
                 { icon: Package,  label: 'Secure Pack',       color: '#feca57' },
                 { icon: RefreshCw,label: '14-day Returns',   color: '#ff9f43' },
               ].map(({ icon: Icon, label, color }) => (
                 <div key={label}
-                  className="flex flex-col items-center gap-1.5 p-3 rounded-2xl text-center"
+                  className="flex flex-col items-center gap-2 p-4 rounded-2xl text-center"
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
                 >
                   <Icon size={17} style={{ color }} />
@@ -260,7 +259,7 @@ const ProductDetailPage = () => {
         </div>
 
         {/* ── Reviews ───────────────────────────────── */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
 
           {/* Write review */}
           <motion.div

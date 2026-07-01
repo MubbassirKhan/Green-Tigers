@@ -32,7 +32,7 @@ export const AdminSidebar = ({ mobileOpen, onClose }) => {
           <Zap size={18} color="white" fill="white" />
         </motion.div>
         <div>
-          <p className="font-black text-sm gradient-text" style={{ fontFamily: 'Poppins, sans-serif' }}>Green Tiger</p>
+          <p className="font-black text-sm gradient-text" style={{ fontFamily: 'Poppins, sans-serif' }}>Green tigers</p>
           <p className="text-[10px] text-white/35 uppercase tracking-widest">Admin Panel</p>
         </div>
       </Link>
@@ -327,7 +327,7 @@ const AdminDashboard = () => {
               <Link
                 key={to}
                 to={to}
-                className="glass-card p-4 flex flex-col items-center gap-2.5 text-center card-hover"
+                className="glass-card p-5 sm:p-6 flex flex-col items-center gap-3 text-center card-hover"
               >
                 <div
                   className="w-11 h-11 rounded-2xl flex items-center justify-center"

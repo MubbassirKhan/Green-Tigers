@@ -34,7 +34,7 @@ const RegisterPage = () => {
     setLoading(true);
     try {
       const user = await register(form.email, form.password, form.full_name, form.phone);
-      toast.success(`Welcome to Green Tiger, ${user.full_name?.split(' ')[0]}! 🌿`);
+      toast.success(`Welcome to Green tigers, ${user.full_name?.split(' ')[0]}! 🌿`);
       navigate('/');
     } catch (err) {
       toast.error(err.response?.data?.detail || 'Registration failed');
@@ -44,7 +44,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-14 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center px-4 py-10 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none"
         style={{
@@ -75,7 +75,7 @@ const RegisterPage = () => {
         initial={{ opacity: 0, y: 28, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 w-full max-w-md"
+        className="relative z-10 w-full max-w-[420px] sm:max-w-[520px] mx-auto"
       >
         {/* Logo */}
         <div className="text-center mb-8">
@@ -88,7 +88,7 @@ const RegisterPage = () => {
               <Zap size={28} color="white" fill="white" />
             </motion.div>
             <span className="text-2xl font-black gradient-text" style={{ fontFamily: 'Poppins, sans-serif' }}>
-              Green Tiger
+              Green tigers
             </span>
           </Link>
           <h1 className="mt-5 text-3xl font-black text-white" style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.02em' }}>
@@ -99,15 +99,15 @@ const RegisterPage = () => {
 
         {/* Card */}
         <div
-          className="rounded-3xl p-7 sm:p-8"
+          className="rounded-[40px] p-8 sm:p-10 md:p-12"
           style={{
-            background: 'rgba(255,255,255,0.05)',
-            backdropFilter: 'blur(24px)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            boxShadow: '0 32px 80px rgba(0,0,0,0.5)',
+            background: 'rgba(10, 8, 20, 0.95)',
+            backdropFilter: 'blur(28px)',
+            border: '1px solid rgba(255,255,255,0.11)',
+            boxShadow: '0 40px 120px rgba(0,0,0,0.55)',
           }}
         >
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
 
             {/* Standard fields */}
             {FIELD_CONFIG.map(({ key, label, type, icon: Icon, placeholder, required, id }) => (
@@ -123,7 +123,7 @@ const RegisterPage = () => {
                     required={required}
                     value={form[key]}
                     onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                    className="input-field pl-10"
+                    className="input-field rounded-[20px] bg-white/5 pl-10"
                     placeholder={placeholder}
                   />
                 </div>
@@ -143,7 +143,7 @@ const RegisterPage = () => {
                   id="register-password"
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
-                  className="input-field pl-10 pr-12"
+                  className="input-field rounded-[20px] bg-white/5 pl-10 pr-12"
                   placeholder="Min 6 characters"
                 />
                 <button
@@ -169,7 +169,7 @@ const RegisterPage = () => {
                   id="register-confirm"
                   value={form.confirm}
                   onChange={(e) => setForm({ ...form, confirm: e.target.value })}
-                  className="input-field pl-10"
+                  className="input-field rounded-[20px] bg-white/5 pl-10"
                   placeholder="Repeat your password"
                 />
               </div>
@@ -196,7 +196,7 @@ const RegisterPage = () => {
               type="submit"
               disabled={loading}
               id="register-submit-btn"
-              className="btn-gold w-full justify-center py-3.5 text-base font-bold mt-2"
+              className="btn-gold w-full justify-center rounded-[22px] py-4 text-base font-bold mt-3"
             >
               {loading ? (
                 <span className="flex items-center gap-2">

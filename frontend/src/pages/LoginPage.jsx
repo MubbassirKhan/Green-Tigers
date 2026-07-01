@@ -28,7 +28,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center px-4 py-10 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background glows */}
       <div className="absolute inset-0 pointer-events-none"
         style={{
@@ -60,10 +60,10 @@ const LoginPage = () => {
         initial={{ opacity: 0, y: 28, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 w-full max-w-md"
+        className="relative z-10 w-full max-w-[420px] sm:max-w-[520px] mx-auto"
       >
         {/* Logo */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-10">
           <Link to="/" className="inline-flex flex-col items-center gap-2">
             <motion.div
               whileHover={{ rotate: 12, scale: 1.08 }}
@@ -73,26 +73,26 @@ const LoginPage = () => {
               <Zap size={28} color="white" fill="white" />
             </motion.div>
             <span className="text-2xl font-black gradient-text" style={{ fontFamily: 'Poppins, sans-serif' }}>
-              Green Tiger
+              Green tigers
             </span>
           </Link>
           <h1 className="mt-5 text-3xl font-black text-white" style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.02em' }}>
             Welcome Back
           </h1>
-          <p className="text-white/45 text-sm mt-1.5">Sign in to your Green Tiger account</p>
+          <p className="text-white/45 text-sm mt-1.5">Sign in to your Green tigers account</p>
         </div>
 
         {/* Card */}
         <div
-          className="rounded-3xl p-7 sm:p-8"
+          className="rounded-[40px] p-8 sm:p-10 md:p-12"
           style={{
-            background: 'rgba(255,255,255,0.05)',
-            backdropFilter: 'blur(24px)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            boxShadow: '0 32px 80px rgba(0,0,0,0.5)',
+            background: 'rgba(10, 8, 20, 0.95)',
+            backdropFilter: 'blur(28px)',
+            border: '1px solid rgba(255,255,255,0.11)',
+            boxShadow: '0 40px 120px rgba(0,0,0,0.55)',
           }}
         >
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-6">
 
             {/* Email */}
             <div>
@@ -107,7 +107,7 @@ const LoginPage = () => {
                   id="login-email"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="input-field pl-10"
+                  className="input-field rounded-[20px] bg-white/5 pl-10"
                   placeholder="you@example.com"
                 />
               </div>
@@ -126,7 +126,7 @@ const LoginPage = () => {
                   id="login-password"
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
-                  className="input-field pl-10 pr-12"
+                  className="input-field rounded-[20px] bg-white/5 pl-10 pr-12"
                   placeholder="Your password"
                 />
                 <button
@@ -144,7 +144,7 @@ const LoginPage = () => {
               whileTap={{ scale: 0.97 }}
               type="submit"
               disabled={loading}
-              className="btn-gold w-full justify-center py-3.5 text-base font-bold mt-1"
+              className="btn-gold w-full justify-center rounded-[22px] py-4 text-base font-bold mt-3"
               id="login-submit-btn"
             >
               {loading ? (
@@ -161,13 +161,13 @@ const LoginPage = () => {
           </form>
 
           {/* Divider */}
-          <div className="flex items-center gap-3 my-5">
-            <div className="flex-1 h-px bg-white/8" />
-            <span className="text-xs text-white/30 font-medium">OR</span>
-            <div className="flex-1 h-px bg-white/8" />
+          <div className="flex items-center gap-3 my-6">
+            <div className="flex-1 h-px bg-white/10" />
+            <span className="text-xs text-white/40 font-medium">OR</span>
+            <div className="flex-1 h-px bg-white/10" />
           </div>
 
-          <p className="text-center text-white/45 text-sm">
+          <p className="text-center text-white/55 text-sm leading-relaxed max-w-[85%] mx-auto">
             Don't have an account?{' '}
             <Link to="/register" className="text-red-400 hover:text-red-300 font-semibold transition-colors">
               Create one free →

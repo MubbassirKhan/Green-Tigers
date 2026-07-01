@@ -1,6 +1,6 @@
-﻿# 🐯 Green Tiger — Full-Stack E-Commerce Platform
+﻿# 🐯 Green tigers — Full-Stack E-Commerce Platform
 
-> A feature-rich, modern e-commerce web application built for a Hackathon. Green Tiger covers six product categories — Clothing, Sports, Home & Kitchen, Beauty, Electronics, and Books — with a complete shopping flow, JWT-based authentication, and a dedicated admin panel.
+> A feature-rich, modern e-commerce web application built for a Hackathon. Green tigers covers six product categories — Clothing, Sports, Home & Kitchen, Beauty, Electronics, and Books — with a complete shopping flow, JWT-based authentication, and a dedicated admin panel.
 
 ---
 
@@ -26,7 +26,7 @@
 
 ## Overview
 
-**Green Tiger** is a full-stack e-commerce platform featuring:
+**Green tigers** is a full-stack e-commerce platform featuring:
 
 - 🛒 Product browsing, filtering, and detail views
 - 🔐 JWT-powered user authentication (register / login)
@@ -319,7 +319,7 @@ The `schema.sql` seed script creates a default admin account:
 
 | Field | Value |
 |---|---|
-| **Email** | `admin@greentiger.pk` |
+| **Email** | `admin@greentigers.pk` |
 | **Password** | `admin123` |
 
 > **Warning**: Change the admin password immediately before any public deployment.
@@ -371,4 +371,4 @@ This project was built for a Hackathon. To contribute or extend it:
 
 ---
 
-Built with love for Hackathon — Green Tiger 🐯
+Built with love for Hackathon — Green tigers 🐯

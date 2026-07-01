@@ -1,5 +1,5 @@
 -- ============================================================
--- GREEN TIGER — E-COMMERCE DATABASE SCHEMA
+-- GREEN tigers — E-COMMERCE DATABASE SCHEMA
 -- Run this in Supabase SQL Editor (Dashboard > SQL Editor)
 -- ============================================================
 
@@ -98,7 +98,7 @@ ON CONFLICT (slug) DO NOTHING;
 
 -- Admin user (password: admin123)
 INSERT INTO profiles (email, password_hash, full_name, role) VALUES
-  ('admin@greentiger.pk', '$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 'Admin User', 'admin')
+  ('admin@greentigers.pk', '$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW', 'Admin User', 'admin')
 ON CONFLICT (email) DO NOTHING;
 
 -- ─── SAMPLE PRODUCTS ─────────────────────────────────────────

@@ -7,13 +7,13 @@ import useAuthStore from '../../store/authStore';
 import toast from 'react-hot-toast';
 
 const FALLBACK = {
-  clothing:       'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=440&q=80',
-  sports:         'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=440&q=80',
-  'home-kitchen': 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=440&q=80',
-  beauty:         'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=440&q=80',
-  electronics:    'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=440&q=80',
-  books:          'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=440&q=80',
-  default:        'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=440&q=80',
+  clothing:       'https://picsum.photos/seed/clothing/440/440',
+  sports:         'https://picsum.photos/seed/sports/440/440',
+  'home-kitchen': 'https://picsum.photos/seed/kitchen/440/440',
+  beauty:         'https://picsum.photos/seed/beauty/440/440',
+  electronics:    'https://picsum.photos/seed/electronics/440/440',
+  books:          'https://picsum.photos/seed/books/440/440',
+  default:        'https://picsum.photos/seed/product/440/440',
 };
 
 const CAT_COLOR = {
@@ -70,12 +70,15 @@ const ProductCard = ({ product }) => {
       }}
     >
       {/* ── Image ─────────────────────────── */}
-      <Link to={`/product/${product.id}`} className="block relative overflow-hidden" style={{ height: '13rem' }}>
+      <Link to={`/product/${product.id}`} className="block relative overflow-hidden" style={{ height: '15rem' }}>
         <img
           src={product.image_url || fallback}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
-          onError={(e) => { e.target.src = fallback; }}
+          onError={(e) => {
+            if (e.target.src !== fallback) e.target.src = fallback;
+            else e.target.src = `https://picsum.photos/seed/${product.id || 'default'}/440/440`;
+          }}
         />
 
         {/* Gradient overlay */}
@@ -148,10 +151,10 @@ const ProductCard = ({ product }) => {
       </Link>
 
       {/* ── Info ──────────────────────────── */}
-      <div className="p-3.5 sm:p-4 flex flex-col gap-2 flex-1">
+      <div className="p-5 sm:p-6 flex flex-col gap-2.5 flex-1">
         <Link to={`/product/${product.id}`}>
           <h3
-            className="font-semibold text-white text-sm leading-snug line-clamp-1 hover:text-red-400 transition-colors"
+            className="font-semibold text-white text-sm leading-snug line-clamp-1 hover:text-red-400 transition-colors group-hover:text-red-300"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             {product.name}
@@ -162,7 +165,7 @@ const ProductCard = ({ product }) => {
         <p className="text-xs text-white/40 line-clamp-1 leading-relaxed">{product.description}</p>
 
         {/* Rating */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <div className="flex gap-0.5">
             {[1, 2, 3, 4, 5].map((s) => (
               <Star
@@ -177,7 +180,7 @@ const ProductCard = ({ product }) => {
         </div>
 
         {/* Price + cart */}
-        <div className="flex items-center justify-between pt-1 mt-auto">
+        <div className="flex items-center justify-between pt-2 mt-auto border-t border-white/5">
           <span
             className="text-base sm:text-lg font-black gradient-text"
             style={{ fontFamily: 'Poppins, sans-serif' }}
@@ -188,8 +191,8 @@ const ProductCard = ({ product }) => {
             whileTap={{ scale: 0.93 }}
             onClick={handleAddToCart}
             disabled={adding || !inStock}
-            className="btn-primary text-xs py-1.5 px-3 disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{ borderRadius: '8px' }}
+            className="btn-primary text-xs py-2 px-3.5 disabled:opacity-40 disabled:cursor-not-allowed"
+            style={{ borderRadius: '10px' }}
           >
             {adding ? '...' : !inStock ? 'Sold Out' : 'Add to Cart'}
           </motion.button>

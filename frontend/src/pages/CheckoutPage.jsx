@@ -205,7 +205,7 @@ const CheckoutPage = () => {
               {items.map((item) => (
                 <div key={item.id} className="flex gap-3 items-center">
                   <img
-                    src={item.products?.image_url || 'https://images.unsplash.com/photo-1463936575829-25148e1db1b8?w=80&q=80'}
+                    src={item.products?.image_url || 'https://picsum.photos/seed/checkoutitem/80/80'}
                     alt={item.products?.name}
                     className="w-12 h-12 rounded-xl object-cover flex-shrink-0"
                   />

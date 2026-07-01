@@ -114,7 +114,7 @@ const AdminProducts = () => {
                   ) : filtered.map((p) => (
                     <tr key={p.id}>
                       <td>
-                        <img src={p.image_url || 'https://images.unsplash.com/photo-1463936575829-25148e1db1b8?w=60&q=80'}
+                        <img src={p.image_url || 'https://picsum.photos/seed/adminprod/60/60'}
                           alt={p.name} className="w-12 h-12 rounded-lg object-cover" />
                       </td>
                       <td className="font-semibold text-sm max-w-xs truncate">{p.name}</td>

@@ -1,15 +1,22 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Package, Clock, Truck, CheckCircle, XCircle, ShoppingBag, MapPin } from 'lucide-react';
+import {
+  Package, Clock, Truck, CheckCircle, XCircle,
+  ShoppingBag, MapPin, ArrowLeft, Calendar, Hash
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
 import api from '../api/client';
 
 const STATUS = {
-  pending:   { color: '#feca57', icon: Clock,        label: 'Pending',   bg: 'rgba(254,202,87,0.12)' },
-  confirmed: { color: '#34d399', icon: CheckCircle,  label: 'Confirmed', bg: 'rgba(52,211,153,0.12)' },
-  shipped:   { color: '#60a5fa', icon: Truck,        label: 'Shipped',   bg: 'rgba(96,165,250,0.12)' },
-  delivered: { color: '#a78bfa', icon: CheckCircle,  label: 'Delivered', bg: 'rgba(167,139,250,0.12)' },
-  cancelled: { color: '#f87171', icon: XCircle,      label: 'Cancelled', bg: 'rgba(248,113,113,0.12)' },
+  pending:   { color: '#feca57', icon: Clock,       label: 'Pending',   bg: 'rgba(254,202,87,0.12)',  border: 'rgba(254,202,87,0.3)' },
+  confirmed: { color: '#34d399', icon: CheckCircle, label: 'Confirmed', bg: 'rgba(52,211,153,0.12)',  border: 'rgba(52,211,153,0.3)' },
+  shipped:   { color: '#60a5fa', icon: Truck,       label: 'Shipped',   bg: 'rgba(96,165,250,0.12)',  border: 'rgba(96,165,250,0.3)' },
+  delivered: { color: '#a78bfa', icon: CheckCircle, label: 'Delivered', bg: 'rgba(167,139,250,0.12)', border: 'rgba(167,139,250,0.3)' },
+  cancelled: { color: '#f87171', icon: XCircle,     label: 'Cancelled', bg: 'rgba(248,113,113,0.12)', border: 'rgba(248,113,113,0.3)' },
 };
+
+const STEPS = ['pending', 'confirmed', 'shipped', 'delivered'];
+const STEP_WIDTH = { pending: '8%', confirmed: '40%', shipped: '72%', delivered: '100%' };
 
 const OrdersPage = () => {
   const [orders, setOrders]   = useState([]);
@@ -35,144 +42,255 @@ const OrdersPage = () => {
 
   return (
     <div className="min-h-screen page-wrapper">
-      <div className="container max-w-3xl">
+      <div className="container max-w-4xl">
 
-        {/* Header */}
+        {/* Back link */}
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <Link
+            to="/shop"
+            className="inline-flex items-center gap-2 text-white/40 hover:text-white mb-10 transition-colors text-sm group"
+          >
+            <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" />
+            Continue Shopping
+          </Link>
+        </motion.div>
+
+        {/* Page Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 flex items-center gap-3"
+          className="flex items-center gap-5 mb-10"
         >
-          <div className="w-11 h-11 rounded-2xl flex items-center justify-center"
-            style={{ background: 'rgba(233,69,96,0.15)', border: '1px solid rgba(233,69,96,0.25)' }}>
-            <ShoppingBag size={20} className="text-red-400" />
+          <div
+            className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
+            style={{ background: 'rgba(233,69,96,0.15)', border: '1px solid rgba(233,69,96,0.3)' }}
+          >
+            <ShoppingBag size={24} className="text-red-400" />
           </div>
           <div>
-            <h1 className="text-3xl sm:text-4xl font-black" style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.02em' }}>
+            <h1
+              className="text-3xl sm:text-4xl font-black"
+              style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.02em' }}
+            >
               My Orders
             </h1>
-            <p className="text-white/40 text-sm mt-0.5">{orders.length} order{orders.length !== 1 ? 's' : ''} placed</p>
+            <p className="text-white/40 text-sm mt-1">
+              {orders.length} order{orders.length !== 1 ? 's' : ''} placed
+            </p>
           </div>
         </motion.div>
 
+        {/* Empty State */}
         {orders.length === 0 ? (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-24 glass-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="glass-card p-16 text-center flex flex-col items-center gap-5"
           >
-            <Package size={64} className="mx-auto mb-5 text-white/12" />
-            <p className="text-white/35 text-lg font-medium">No orders yet</p>
-            <p className="text-white/22 text-sm mt-1 mb-6">Start shopping to place your first order!</p>
-            <a href="/shop" className="btn-gold px-6">Browse Products</a>
+            <div
+              className="w-20 h-20 rounded-3xl flex items-center justify-center"
+              style={{ background: 'rgba(255,255,255,0.05)' }}
+            >
+              <Package size={40} className="text-white/20" />
+            </div>
+            <div>
+              <p className="text-white/40 text-xl font-semibold">No orders yet</p>
+              <p className="text-white/25 text-sm mt-2">Start shopping to place your first order!</p>
+            </div>
+            <Link to="/shop" className="btn-gold px-8 mt-2">Browse Products</Link>
           </motion.div>
+
         ) : (
-          <div className="space-y-5">
+          <div className="space-y-6">
             {orders.map((order, i) => {
-              const status = STATUS[order.status] || STATUS.pending;
-              const Icon   = status.icon;
+              const status   = STATUS[order.status] || STATUS.pending;
+              const Icon     = status.icon;
+              const isCancelled = order.status === 'cancelled';
+
               return (
                 <motion.div
                   key={order.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.06 }}
-                  className="glass-card p-5 sm:p-6"
+                  transition={{ delay: i * 0.07, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="glass-card overflow-hidden"
                 >
-                  {/* Order header */}
-                  <div className="flex flex-wrap items-start justify-between gap-3 mb-5">
-                    <div>
-                      <p className="text-[10px] text-white/35 uppercase tracking-widest font-semibold mb-1">Order ID</p>
-                      <p className="font-mono text-sm text-white/75 font-semibold">{order.id?.slice(0, 8).toUpperCase()}…</p>
-                      <p className="text-xs text-white/35 mt-1">
-                        {new Date(order.created_at).toLocaleDateString('en-PK', {
-                          year: 'numeric', month: 'long', day: 'numeric',
-                        })}
-                      </p>
-                    </div>
+                  {/* ── Card Top Bar (status color accent) */}
+                  <div
+                    className="h-1 w-full"
+                    style={{ background: `linear-gradient(90deg, ${status.color}, ${status.color}44)` }}
+                  />
 
-                    <div
-                      className="flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-bold"
-                      style={{ background: status.bg, color: status.color, border: `1px solid ${status.color}40` }}
-                    >
-                      <Icon size={12} />
-                      {status.label}
-                    </div>
-                  </div>
+                  <div className="p-7 sm:p-8">
 
-                  {/* Items */}
-                  <div className="space-y-3 mb-5">
-                    {order.order_items?.map((item) => (
-                      <div key={item.id} className="flex items-center gap-3">
-                        <img
-                          src={item.products?.image_url || 'https://images.unsplash.com/photo-1463936575829-25148e1db1b8?w=60&q=80'}
-                          alt={item.products?.name}
-                          className="w-12 h-12 rounded-xl object-cover flex-shrink-0"
+                    {/* ── Order Header ──────────────────── */}
+                    <div className="flex flex-wrap items-start justify-between gap-4 mb-7">
+                      {/* ID + Date */}
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+                        <div className="flex items-center gap-2.5">
+                          <Hash size={14} className="text-white/30" />
+                          <div>
+                            <p className="text-[10px] text-white/30 uppercase tracking-widest font-semibold mb-0.5">Order ID</p>
+                            <p className="font-mono text-sm font-bold text-white">
+                              {order.id?.slice(0, 8).toUpperCase()}
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          className="w-px h-8 hidden sm:block"
+                          style={{ background: 'rgba(255,255,255,0.08)' }}
                         />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-white truncate">{item.products?.name}</p>
-                          <p className="text-xs text-white/40 mt-0.5">
-                            {item.quantity} × Rs. {item.unit_price?.toLocaleString()}
+                        <div className="flex items-center gap-2.5">
+                          <Calendar size={14} className="text-white/30" />
+                          <div>
+                            <p className="text-[10px] text-white/30 uppercase tracking-widest font-semibold mb-0.5">Placed On</p>
+                            <p className="text-sm text-white/70 font-medium">
+                              {new Date(order.created_at).toLocaleDateString('en-PK', {
+                                year: 'numeric', month: 'short', day: 'numeric',
+                              })}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Status Badge */}
+                      <div
+                        className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold"
+                        style={{ background: status.bg, color: status.color, border: `1px solid ${status.border}` }}
+                      >
+                        <Icon size={13} />
+                        {status.label}
+                      </div>
+                    </div>
+
+                    {/* ── Divider ──────────────────────── */}
+                    <div className="h-px bg-white/6 mb-6" />
+
+                    {/* ── Order Items ───────────────────── */}
+                    <div className="space-y-4 mb-6">
+                      {order.order_items?.map((item) => (
+                        <div
+                          key={item.id}
+                          className="flex items-center gap-4 p-4 rounded-2xl"
+                          style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}
+                        >
+                          <img
+                            src={item.products?.image_url || 'https://picsum.photos/seed/orderitem/80/80'}
+                            alt={item.products?.name}
+                            className="w-16 h-16 rounded-xl object-cover flex-shrink-0"
+                            style={{ border: '1px solid rgba(255,255,255,0.1)' }}
+                          />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-white truncate mb-1">
+                              {item.products?.name}
+                            </p>
+                            <p className="text-xs text-white/40">
+                              Qty: <span className="text-white/60 font-medium">{item.quantity}</span>
+                              &nbsp;×&nbsp;
+                              Rs. <span className="text-white/60 font-medium">{item.unit_price?.toLocaleString()}</span>
+                            </p>
+                          </div>
+                          <p className="text-sm font-black text-yellow-400 flex-shrink-0">
+                            Rs. {(item.quantity * item.unit_price)?.toLocaleString()}
                           </p>
                         </div>
-                        <p className="text-sm font-bold text-yellow-400 flex-shrink-0">
-                          Rs. {(item.quantity * item.unit_price)?.toLocaleString()}
+                      ))}
+                    </div>
+
+                    {/* ── Footer: Address + Total ────────── */}
+                    <div
+                      className="flex flex-wrap items-center justify-between gap-4 py-5 px-5 rounded-2xl mb-6"
+                      style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}
+                    >
+                      <div className="flex items-start gap-2.5 min-w-0 flex-1">
+                        <MapPin size={15} className="text-red-400 mt-0.5 flex-shrink-0" />
+                        <div className="min-w-0">
+                          <p className="text-[10px] text-white/30 uppercase tracking-widest font-semibold mb-1">
+                            Shipping To
+                          </p>
+                          <p className="text-sm text-white/60 truncate">{order.shipping_address}</p>
+                        </div>
+                      </div>
+                      <div className="flex-shrink-0 text-right">
+                        <p className="text-[10px] text-white/30 uppercase tracking-widest font-semibold mb-1">
+                          Order Total
+                        </p>
+                        <p
+                          className="text-xl font-black gradient-text"
+                          style={{ fontFamily: 'Poppins, sans-serif' }}
+                        >
+                          Rs. {order.total_amount?.toLocaleString()}
                         </p>
                       </div>
-                    ))}
-                  </div>
-
-                  {/* Footer */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 pt-4"
-                    style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-                    <div className="flex items-start gap-1.5 text-xs text-white/35 max-w-[60%]">
-                      <MapPin size={12} className="text-red-400 mt-0.5 flex-shrink-0" />
-                      <span className="line-clamp-1">{order.shipping_address}</span>
                     </div>
-                    <span
-                      className="text-lg font-black gradient-text flex-shrink-0"
-                      style={{ fontFamily: 'Poppins, sans-serif' }}
-                    >
-                      Rs. {order.total_amount?.toLocaleString()}
-                    </span>
-                  </div>
 
-                  {/* Progress bar */}
-                  {order.status !== 'cancelled' && (
-                    <div className="mt-4">
-                      <div className="flex justify-between mb-2">
-                        {['pending', 'confirmed', 'shipped', 'delivered'].map((s, si) => {
-                          const st = STATUS[s];
-                          const steps = ['pending','confirmed','shipped','delivered'];
-                          const currentIdx = steps.indexOf(order.status);
-                          const isActive = si <= currentIdx;
-                          return (
-                            <div key={s} className="flex flex-col items-center gap-1">
-                              <div
-                                className="w-2 h-2 rounded-full"
-                                style={{ background: isActive ? status.color : 'rgba(255,255,255,0.15)' }}
-                              />
-                              <span className="text-[9px] text-white/30 hidden sm:block capitalize">{s}</span>
-                            </div>
-                          );
-                        })}
+                    {/* ── Progress Tracker ───────────────── */}
+                    {!isCancelled && (
+                      <div>
+                        <p className="text-[10px] text-white/30 uppercase tracking-widest font-semibold mb-4">
+                          Order Progress
+                        </p>
+                        {/* Step labels + dots */}
+                        <div className="flex justify-between mb-3">
+                          {STEPS.map((s, si) => {
+                            const stepStatus = STATUS[s];
+                            const currentIdx = STEPS.indexOf(order.status);
+                            const isActive   = si <= currentIdx;
+                            const isCurrent  = si === currentIdx;
+                            return (
+                              <div key={s} className="flex flex-col items-center gap-2 flex-1">
+                                <motion.div
+                                  className="w-3 h-3 rounded-full flex items-center justify-center"
+                                  style={{
+                                    background: isActive ? status.color : 'rgba(255,255,255,0.1)',
+                                    boxShadow: isCurrent ? `0 0 8px ${status.color}80` : 'none',
+                                  }}
+                                  animate={isCurrent ? { scale: [1, 1.3, 1] } : {}}
+                                  transition={{ duration: 1.5, repeat: Infinity }}
+                                />
+                                <span
+                                  className="text-[10px] font-semibold capitalize hidden sm:block"
+                                  style={{ color: isActive ? status.color : 'rgba(255,255,255,0.25)' }}
+                                >
+                                  {s}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        {/* Progress bar */}
+                        <div
+                          className="h-1.5 rounded-full overflow-hidden"
+                          style={{ background: 'rgba(255,255,255,0.08)' }}
+                        >
+                          <motion.div
+                            className="h-full rounded-full"
+                            style={{ background: `linear-gradient(90deg, ${status.color}, ${status.color}88)` }}
+                            initial={{ width: '0%' }}
+                            animate={{ width: STEP_WIDTH[order.status] || '8%' }}
+                            transition={{ duration: 0.9, ease: 'easeOut', delay: i * 0.07 + 0.2 }}
+                          />
+                        </div>
                       </div>
-                      <div className="h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
-                        <motion.div
-                          className="h-full rounded-full"
-                          style={{ background: status.color }}
-                          initial={{ width: '0%' }}
-                          animate={{
-                            width: {
-                              pending: '10%', confirmed: '40%', shipped: '70%', delivered: '100%',
-                            }[order.status] || '10%',
-                          }}
-                          transition={{ duration: 0.8, ease: 'easeOut' }}
-                        />
+                    )}
+
+                    {/* Cancelled message */}
+                    {isCancelled && (
+                      <div
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl"
+                        style={{ background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)' }}
+                      >
+                        <XCircle size={16} className="text-red-400 flex-shrink-0" />
+                        <p className="text-sm text-red-400">This order has been cancelled.</p>
                       </div>
-                    </div>
-                  )}
+                    )}
+
+                  </div>
                 </motion.div>
               );
             })}

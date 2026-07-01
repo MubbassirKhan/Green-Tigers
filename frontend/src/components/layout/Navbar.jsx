@@ -8,14 +8,19 @@ import {
 import useAuthStore from '../../store/authStore';
 import useCartStore from '../../store/cartStore';
 
-const NAV_LINKS = [
+const PRIMARY_LINKS = [
   { to: '/', label: 'Home', icon: Home },
   { to: '/shop', label: 'Shop', icon: Package },
   { to: '/feedback', label: 'Feedback', icon: MessageCircle },
+];
+
+const CATEGORY_LINKS = [
   { to: '/shop?category_slug=clothing', label: 'Clothing' },
   { to: '/shop?category_slug=electronics', label: 'Electronics' },
   { to: '/shop?category_slug=sports', label: 'Sports' },
 ];
+
+const NAV_LINKS = [...PRIMARY_LINKS, ...CATEGORY_LINKS];
 
 const Navbar = () => {
   const [scrolled, setScrolled]       = useState(false);
@@ -83,7 +88,7 @@ const Navbar = () => {
         }`}
       >
         <div className="container">
-          <div className="flex items-center justify-between h-16 md:h-18">
+          <div className="flex items-center justify-between h-16 md:h-[72px]">
 
             {/* ── Logo ────────────────────────── */}
             <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
@@ -98,26 +103,27 @@ const Navbar = () => {
               </motion.div>
               <div className="flex flex-col leading-tight">
                 <span className="font-black text-base gradient-text" style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.02em' }}>
-                  Green Tiger
+                  Green tigers
                 </span>
                 <span className="text-[9px] text-white/30 font-medium tracking-widest uppercase hidden sm:block">Shop Smart</span>
               </div>
             </Link>
 
             {/* ── Desktop nav links ────────────── */}
-            <div className="hidden lg:flex items-center gap-0.5">
-              {NAV_LINKS.map((link) => (
+            <div className="hidden lg:flex items-center gap-1">
+              {/* Primary Links */}
+              {PRIMARY_LINKS.map((link) => (
                 <Link
                   key={link.label}
                   to={link.to}
-                  className={`relative flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${
+                  className={`relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${
                     isActive(link.to)
                       ? 'text-white'
-                      : 'text-white/55 hover:text-white'
+                      : 'text-white/60 hover:text-white'
                   }`}
                 >
                   {link.icon && (
-                    <link.icon size={16} className="text-white/70" />
+                    <link.icon size={15} className="opacity-70" />
                   )}
                   {link.label}
                   {isActive(link.to) && (
@@ -130,10 +136,36 @@ const Navbar = () => {
                   )}
                 </Link>
               ))}
+
+              {/* Vertical Divider */}
+              <div className="w-px h-5 bg-white/15 mx-2 rounded-full" />
+
+              {/* Category Links */}
+              {CATEGORY_LINKS.map((link) => (
+                <Link
+                  key={link.label}
+                  to={link.to}
+                  className={`relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${
+                    location.search.includes(link.to.split('?')[1])
+                      ? 'text-white'
+                      : 'text-white/50 hover:text-white/90'
+                  }`}
+                >
+                  {link.label}
+                  {location.search.includes(link.to.split('?')[1]) && (
+                    <motion.span
+                      layoutId="nav-pill-cat"
+                      className="absolute inset-0 rounded-lg -z-10"
+                      style={{ background: 'rgba(254,202,87,0.1)', border: '1px solid rgba(254,202,87,0.2)' }}
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              ))}
             </div>
 
             {/* ── Right side ───────────────────── */}
-            <div className="flex items-center gap-1 sm:gap-2">
+            <div className="flex items-center gap-2 sm:gap-3">
 
               {/* Cart button (only for logged-in non-admin) */}
               {isAuthenticated && !isAdmin() && (
@@ -321,7 +353,7 @@ const Navbar = () => {
                     <Zap size={16} color="white" fill="white" />
                   </div>
                   <span className="font-black text-sm gradient-text" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    Green Tiger
+                    Green tigers
                   </span>
                 </Link>
                 <button onClick={() => setMobileOpen(false)} className="p-2 rounded-xl hover:bg-white/8 transition-all">

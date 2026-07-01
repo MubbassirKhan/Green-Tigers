@@ -62,18 +62,18 @@ const ShopPage = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8"
+          className="mb-10"
         >
-          <h1 className="text-3xl sm:text-4xl font-black" style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.02em' }}>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black" style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '-0.02em' }}>
             Our <span className="gradient-text">Collection</span>
           </h1>
-          <p className="text-white/45 mt-1.5 text-sm">
+          <p className="text-white/45 mt-2 text-sm">
             {loading ? 'Loading products...' : `${products.length} product${products.length !== 1 ? 's' : ''} available`}
           </p>
         </motion.div>
 
         {/* ── Search + filter row ─────────────────────── */}
-        <div className="flex gap-2.5 mb-5 flex-wrap sm:flex-nowrap">
+        <div className="flex gap-3 mb-6 flex-wrap sm:flex-nowrap">
           <div className="relative flex-1 min-w-0">
             <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/35 pointer-events-none" />
             <input
@@ -118,10 +118,10 @@ const ShopPage = () => {
         </div>
 
         {/* ── Category quick filters ─────────────────── */}
-        <div className="flex gap-2 flex-wrap mb-6">
+        <div className="flex gap-2.5 flex-wrap mb-8">
           <button
             onClick={() => setSelectedCat('')}
-            className={`px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all ${
+            className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all ${
               !selectedCat
                 ? 'text-gray-900'
                 : 'glass text-white/55 hover:text-white'
@@ -134,7 +134,7 @@ const ShopPage = () => {
             <button
               key={cat.id}
               onClick={() => setSelectedCat(cat.slug)}
-              className={`px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all ${
+              className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all ${
                 selectedCat === cat.slug
                   ? 'text-gray-900'
                   : 'glass text-white/55 hover:text-white'
@@ -147,7 +147,7 @@ const ShopPage = () => {
         </div>
 
         {/* ── Main grid with optional sidebar ─────────── */}
-        <div className="flex gap-6 lg:gap-8 items-start">
+        <div className="flex gap-7 lg:gap-10 items-start">
 
           {/* Sidebar filters */}
           <AnimatePresence>

@@ -40,9 +40,9 @@ const AdminUsers = () => {
   return (
     <div className="flex min-h-screen">
       <AdminSidebar />
-      <main className="flex-1 p-8 overflow-auto">
+      <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-3xl font-black mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>Users</h1>
+          <h1 className="text-2xl sm:text-3xl font-black mb-2" style={{ fontFamily: 'Poppins, sans-serif' }}>Users</h1>
           <p className="text-white/50 text-sm mb-8">{users.length} registered users</p>
 
           <div className="glass rounded-2xl overflow-hidden">

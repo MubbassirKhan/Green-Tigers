@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from routers import auth, products, categories, cart, orders, feedback, admin
 
 app = FastAPI(
-    title="Green Tiger API",
+    title="Green tigers API",
     description="Full-stack E-Commerce API — Clothing, Sports, Home & Kitchen, Beauty, Electronics, Books",
     version="1.0.0"
 )
@@ -55,9 +55,51 @@ app.include_router(admin.router)
 
 @app.get("/", tags=["Health"])
 async def root():
-    return {"message": "🛍️ Green Tiger API is running!", "docs": "/docs", "version": "1.0.0"}
+    return {"message": "🛍️ Green tigers API is running!", "docs": "/docs", "version": "1.0.0"}
 
 
 @app.get("/health", tags=["Health"])
 async def health():
     return {"status": "ok"}
+
+from fastapi import APIRouter
+from pydantic import BaseModel
+import joblib
+import re
+import os
+
+router = APIRouter(prefix="/sentiment", tags=["Sentiment"])
+app.include_router(router)
+
+# Load model once
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "model", "review_sentiment_model.pkl")
+bundle = joblib.load(MODEL_PATH)
+
+model = bundle["model"]
+vectorizer = bundle["vectorizer"]
+stop_words = bundle["stop_words"]
+
+
+def clean_text(text):
+    text = str(text).lower()
+    text = re.sub(r"[^\w\s']", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    words = [w for w in text.split() if w not in stop_words]
+    return " ".join(words)
+
+
+class ReviewRequest(BaseModel):
+    review: str
+
+
+@router.post("/predict")
+def predict_sentiment(data: ReviewRequest):
+    cleaned = clean_text(data.review)
+    vector = vectorizer.transform([cleaned])
+    prediction = model.predict(vector)[0]
+
+    return {
+        "review": data.review,
+        "sentiment": prediction
+    }

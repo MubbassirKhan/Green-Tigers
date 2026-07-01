@@ -3,7 +3,7 @@ import { X, ShoppingCart, Minus, Plus, Trash2, ShoppingBag, ArrowRight, Tag } fr
 import { Link } from 'react-router-dom';
 import useCartStore from '../../store/cartStore';
 
-const FALLBACK = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=120&q=80';
+const FALLBACK = 'https://picsum.photos/seed/cartitem/120/120';
 
 const CartDrawer = () => {
   const { isOpen, closeCart, items, updateItem, removeItem, getTotal } = useCartStore();
