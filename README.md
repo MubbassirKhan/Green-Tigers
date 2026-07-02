@@ -1,4 +1,4 @@
-﻿# 🐯 Green tigers — Full-Stack E-Commerce Platform
+﻿# Green tigers — Full-Stack E-Commerce Platform
 
 > A feature-rich, modern e-commerce web application built for a Hackathon. Green tigers covers six product categories — Clothing, Sports, Home & Kitchen, Beauty, Electronics, and Books — with a complete shopping flow, JWT-based authentication, and a dedicated admin panel.
 
@@ -386,4 +386,5 @@ Develops the About Us page and various frontend sections, focusing on intuitive 
 7. Sruthi – Framework Developer
 Designs and develops the core framework and structural foundation of the web application, ensuring scalability and maintainability.
 
-Built with love for Hackathon — Green tigers 🐯
+Built with love for Hackathon — Green tigers
+
