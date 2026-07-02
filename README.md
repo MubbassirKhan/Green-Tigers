@@ -363,12 +363,27 @@ The admin panel provides:
 
 This project was built for a Hackathon. To contribute or extend it:
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Commit your changes: `git commit -m "Add your feature"`
-4. Push to the branch: `git push origin feature/your-feature`
-5. Open a Pull Request
+Green Tigers – Core Team
 
----
+1. Founder – Dhanuja Prakash
+Provides overall vision, leadership, and strategic guidance for the Green Tigers project, ensuring its successful planning, execution, and long-term growth.
+
+2. Co-Founder – Rohan
+Leads project management, collaborations, and oversees the Data Science & Analytics division, driving innovation through data-driven solutions.
+
+3. Mubbassir Khan – Full Stack Web Developer
+Responsible for designing, developing, and maintaining both the frontend and backend architecture of the Green Tigers web platform.
+
+4. Devika Joshi – Frontend Developer
+Designs and develops responsive, user-friendly frontend interfaces to enhance the user experience.
+
+5. Dinesh – Web Designer & Developer
+Contributes to the overall web design, layout, and functionality, ensuring a visually appealing and seamless platform.
+
+6. Akash – Frontend Developer
+Develops the About Us page and various frontend sections, focusing on intuitive design and user engagement.
+
+7. Sruthi – Framework Developer
+Designs and develops the core framework and structural foundation of the web application, ensuring scalability and maintainability.
 
 Built with love for Hackathon — Green tigers 🐯
